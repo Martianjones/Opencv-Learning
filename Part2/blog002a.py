@@ -1,10 +1,11 @@
 import cv2
-import numpy as np
 import matplotlib.pyplot as plt
 
 # 读入图片并将图片转换到RGB颜色空间
 img1 = cv2.imread('lena.jpg')
+img1[20:50,50:80] = [255,255,255]   # 改变图像中的一块区域
 img1 = cv2.cvtColor(img1,cv2.COLOR_BGR2RGB)
+
 
 img2 = cv2.imread('minecraft.jpg')
 img2 = cv2.cvtColor(img2,cv2.COLOR_BGR2RGB)

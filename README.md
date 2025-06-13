@@ -3,6 +3,13 @@
 
 使用的语言为python，使用的IDE为pycharm
 
+参考的开源书籍为华为云《从零到壹•Python图像处理及识别》电子书
+
+[https://bbs.huaweicloud.com/blogs/336932](电子书下载地址)
+
+[https://github.com/eastmountyxz/HWCloudImageRecognition](原作者博客)
+
+
 ## 第一部分 图像处理基础知识
 ### 图像处理基础知识
 ### Opencv显示读取修改及保存图像

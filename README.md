@@ -5,9 +5,9 @@
 
 参考的开源书籍为华为云《从零到壹•Python图像处理及识别》电子书
 
-[https://bbs.huaweicloud.com/blogs/336932](电子书下载地址)
+开源电子书下载地址:[https://bbs.huaweicloud.com/blogs/336932]
 
-[https://github.com/eastmountyxz/HWCloudImageRecognition](原作者博客)
+原作者博客地址:[https://github.com/eastmountyxz/HWCloudImageRecognition]
 
 
 ## 第一部分 图像处理基础知识

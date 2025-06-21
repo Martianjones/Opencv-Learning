@@ -47,7 +47,7 @@ for i in X_test:
     XX_test.append(((hist/255).flatten()))
 
 #-------------------------------
-# 第三步 基于朴素贝叶斯的图像分类处理
+# 第三步 基于K最近邻算法的图像分类处理
 #-------------------------------
 from sklearn.neighbors import KNeighborsClassifier
 clf = KNeighborsClassifier(n_neighbors=11).fit(XX_train,y_train)

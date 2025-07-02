@@ -22,21 +22,23 @@ def stretch(img):
 '''
 def LocateLicense(img,sourceimg):
     # 定位车牌号
-    contours,hierarchy = cv2.findContours(img,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+    contours,hierarchy = cv2.findContours(img,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
     # 找出最大的三个区域
     block = []
     for contour in contours:
         # 寻找矩形轮廓
         y,x =[],[]
         for p in contour:
+            print(p)
             x.append(p[0][0])
             y.append(p[0][1])
         r = [min(y),min(x),max(y),max(x)]
 
         #计算面积和长度比
         a = (r[2]-r[0])*(r[3]-r[1]) # 面积
-        s = (r[2]-r[0])*(r[3]-r[1]) # 长度比
+        s = (r[2]-r[0])/(r[3]-r[1]) # 长度比
         block.append([r,a,s])
+
 
     # 选出面积最大的3个区域
     block = sorted(block,key= lambda b:b[1])[-3:]
@@ -47,8 +49,8 @@ def LocateLicense(img,sourceimg):
         # BGR 转 HSV
         hsv = cv2.cvtColor(b,cv2.COLOR_BGR2HSV)
         # 蓝色车牌的范围
-        lower = np.array([100,50,50])
-        upper = np.array([140,255,255])
+        lower = np.array([100,200,30])
+        upper = np.array([120,255,60])
         # 根据阈值构建掩膜
         mask = cv2.inRange(hsv,lower,upper)
         # 统计权值
@@ -109,11 +111,12 @@ def ImagePreprocessing(img):
     # 6.图像阈值化
     maxi = float(diffimg.max())
     mini = float(diffimg.min())
-    x = maxi - ((maxi-mini)/2)
+    x = maxi - ((maxi-mini)/2) - ((maxi-mini)/5)
     ret,binary = cv2.threshold(diffimg,x,255,cv2.THRESH_BINARY)
 
     # 7.Canny 边缘检测
     canny = cv2.Canny(binary,binary.shape[0],binary.shape[1])
+
 
     # 8.消除小区域保留大区域
     # 闭运算
@@ -125,6 +128,8 @@ def ImagePreprocessing(img):
     openimg3 = cv2.morphologyEx(openimg2,cv2.MORPH_OPEN,kernel)
 
     # 9.结合颜色定位车牌位置并消除小区域
+    hsv = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
+
     rect = LocateLicense(openimg3,img)
     print(rect)
 
@@ -136,7 +141,7 @@ def ImagePreprocessing(img):
     cv2.destroyAllWindows()
 
     # 显示图像
-    ShowImage(source,gray,stretchedimg,openimg, diffimg, binary, canny, openimg3, result)
+    ShowImage(hsv,gray,stretchedimg,openimg, diffimg, binary, canny, openimg3, result)
 
     return rect,img
 
